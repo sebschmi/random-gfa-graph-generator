@@ -1,6 +1,15 @@
 [package]
 name = "random-gfa-graph-generator"
+description = "Generate random GFA graphs."
+authors = ["Sebastian Schmidt <sebastian.schmidt@helsinki.fi>"]
+license = "BSD-2-Clause"
+repository = "https://github.com/sebschmi/random-gfa-graph-generator"
 version = "0.1.0"
+
 edition = "2024"
 
 [dependencies]
+clap = "4.5.60"
+log = "0.4.29"
+simplelog = "0.12.2"
+rand = "0.10.0"
