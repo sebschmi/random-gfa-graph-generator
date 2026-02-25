@@ -51,6 +51,10 @@ fn main() -> anyhow::Result<()> {
         bail!("Cannot ensure strong connectivity with fewer edges than nodes.");
     }
 
+    if cli.node_count == 0 && cli.edge_count > 0 {
+        bail!("Cannot have edges without nodes.");
+    }
+
     let mut output = BufWriter::new(if &cli.output_file == "-" {
         Box::new(io::stdout()) as Box<dyn Write>
     } else {
@@ -81,18 +85,22 @@ fn main() -> anyhow::Result<()> {
         cli.edge_count
     };
 
-    let random_node = Uniform::new_inclusive(1, cli.node_count).unwrap();
-    let signs = ['+', '-'];
-    for _ in 0..edge_count {
-        let from = random_node.sample(&mut rng);
-        let to = random_node.sample(&mut rng);
-        let from_sign = signs.choose(&mut rng).unwrap();
-        let to_sign = signs.choose(&mut rng).unwrap();
-        writeln!(
-            output,
-            "L\t{}\t{}\t{}\t{}\t0M",
-            from, from_sign, to, to_sign
-        )?;
+    if cli.node_count > 0 {
+        let random_node = Uniform::new_inclusive(1, cli.node_count).unwrap();
+        let signs = ['+', '-'];
+        for _ in 0..edge_count {
+            let from = random_node.sample(&mut rng);
+            let to = random_node.sample(&mut rng);
+            let from_sign = signs.choose(&mut rng).unwrap();
+            let to_sign = signs.choose(&mut rng).unwrap();
+            writeln!(
+                output,
+                "L\t{}\t{}\t{}\t{}\t0M",
+                from, from_sign, to, to_sign
+            )?;
+        }
+    } else {
+        assert_eq!(edge_count, 0);
     }
 
     Ok(())
