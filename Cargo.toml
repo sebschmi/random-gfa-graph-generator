@@ -4,7 +4,7 @@ description = "Generate random GFA graphs."
 authors = ["Sebastian Schmidt <sebastian.schmidt@helsinki.fi>"]
 license = "BSD-2-Clause"
 repository = "https://github.com/sebschmi/random-gfa-graph-generator"
-version = "0.1.0"
+version = "0.1.1"
 
 edition = "2024"
 
